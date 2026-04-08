@@ -31,6 +31,12 @@ class Tensor:
         if self.data.ndim > 2:
             raise Exception("Tensor shapes may not exceed 2d.")
 
+    def get_size(self) -> int:
+        return self.data.size
+
+    def get_shape(self) -> tuple[int, int]:
+        return self.data.shape
+
     def __add__(self, other):
         return Tensor(context=TensorContext(operation=TensorOperation.ADD, children=(self, other)))
 
