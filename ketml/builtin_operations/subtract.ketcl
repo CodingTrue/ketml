@@ -1,0 +1,8 @@
+void subtract(
+    Tensor a,
+    Tensor b,
+    Tensor c
+) {
+    int x_id = get_global_id(0);
+    c.data[c.offset + c.output_offset + x_id] = a.data[a.offset + x_id] - b.data[b.offset + x_id];
+}
