@@ -58,4 +58,6 @@ class Tensor:
 
     @staticmethod
     def empty(*size: Sequence[int]|np.ndarray) -> Tensor:
-        return Tensor(np.empty(np.asarray(size, dtype=int).squeeze()))
+        t = Tensor()
+        t.data = np.empty(np.asarray(size, dtype=int).squeeze(), dtype=np.float32)
+        return t
