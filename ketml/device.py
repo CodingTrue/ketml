@@ -28,7 +28,7 @@ class Device:
         Device._default = self
 
         self.cl_context = cl.Context(devices=[self.cl_device])
-        self.cl_queue = cl.CommandQueue(context=self.cl_context, device=self.cl_device, properties=cl.command_queue_properties.PROFILING_ENABLE)
+        self.cl_queue = cl.CommandQueue(context=self.cl_context, device=self.cl_device)
 
     def get_context(self) -> cl.Context:
         if self.cl_context is None:
