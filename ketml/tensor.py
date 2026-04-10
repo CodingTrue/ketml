@@ -55,3 +55,7 @@ class Tensor:
     @staticmethod
     def random(*size: Sequence[int]|np.ndarray) -> Tensor:
         return Tensor(np.random.random(np.asarray(size, dtype=int).squeeze()))
+
+    @staticmethod
+    def empty(*size: Sequence[int]|np.ndarray) -> Tensor:
+        return Tensor(np.empty(np.asarray(size, dtype=int).squeeze()))
