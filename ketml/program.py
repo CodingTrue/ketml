@@ -89,6 +89,7 @@ class Program:
             offset = tensor_record.offset
 
         dest = Tensor.empty(size)
+        dest.data = dest.data.ravel()
 
         cl.enqueue_copy(
             queue=queue,
