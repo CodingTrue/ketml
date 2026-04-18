@@ -1,4 +1,5 @@
 import pyopencl as cl
+import numpy as np
 
 from typing import Any
 
@@ -29,8 +30,17 @@ class Program:
         )
         self.kernels: list[Kernel] = []
 
+        self.normalize_static_tensors()
         self.prepare_kernels()
         self.compile_kernels()
+
+    def normalize_static_tensors(self):
+        max_size = max([tensor.get_size() for tensor in self.computegraph.static_tensors])
+
+        for tensor in self.computegraph.static_tensors:
+            if tensor.get_size() is max_size:
+                continue
+            tensor.data = np.resize(tensor.data, (tensor.get_shape()[0], max_size))
 
     def prepare_kernels(self):
         for tensor in self.computegraph.static_tensors:

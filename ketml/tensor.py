@@ -38,19 +38,23 @@ class Tensor:
         return self.data.shape
 
     def __add__(self, other):
-        return Tensor(context=TensorContext(operation=TensorOperation.ADD, children=(self, other)))
+        return Tensor(context=TensorContext(operation=TensorOperation.ADD, children=prepare_arguments(self, other)))
 
     def __sub__(self, other):
-        return Tensor(context=TensorContext(operation=TensorOperation.SUBTRACT, children=(self, other)))
+        return Tensor(context=TensorContext(operation=TensorOperation.SUBTRACT, children=prepare_arguments(self, other)))
 
     def __mul__(self, other):
-        return Tensor(context=TensorContext(operation=TensorOperation.MULTIPLY, children=(self, other)))
+        return Tensor(context=TensorContext(operation=TensorOperation.MULTIPLY, children=prepare_arguments(self, other)))
 
     def __truediv__(self, other):
-        return Tensor(context=TensorContext(operation=TensorOperation.DIVIDE, children=(self, other)))
+        return Tensor(context=TensorContext(operation=TensorOperation.DIVIDE, children=prepare_arguments(self, other)))
 
     def get_context(self) -> TensorContext:
         return self.context
+
+    @staticmethod
+    def is_tensor(target) -> bool:
+        return isinstance(target, Tensor)
 
     @staticmethod
     def random(*size: Sequence[int]|np.ndarray) -> Tensor:
@@ -61,3 +65,9 @@ class Tensor:
         t = Tensor()
         t.data = np.empty(np.asarray(size, dtype=int).squeeze(), dtype=np.float32)
         return t
+
+def prepare_arguments(a: Tensor, b) -> Tensor:
+    if not Tensor.is_tensor(target=b):
+        b = Tensor(b)
+
+    return a, b
