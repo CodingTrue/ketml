@@ -60,6 +60,9 @@ class Program:
             kernel.compile()
 
     def run(self, fill_all_tensors: bool = False):
+        if len(self.computegraph.dynamic_tensors) == 0:
+            return
+
         self.static_buffer.init_buffer(init_tensors=self.computegraph.static_tensors)
         self.dynamic_buffer.init_buffer()
 
