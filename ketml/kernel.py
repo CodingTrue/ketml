@@ -22,9 +22,14 @@ class Kernel:
     def compile(self):
         sources = []
         calls = []
+        uniques = []
 
         for operation in self.operations:
-            sources.append(operation.get_source())
+            unique = f"{operation.identifier}_{operation.get_variant_name()}"
+            if unique not in uniques:
+                sources.append(operation.get_source())
+                uniques.append(unique)
+
             calls.append(operation.get_call())
 
         operation_definitions = '\n'.join(sources)
